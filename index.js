@@ -58,7 +58,7 @@ RGGame.on("WithdrawRequest", async (user, token, amount, timestamp, event) => {
   const amountInStr = formatAmount(amount);
   if (token === RUC_CONTRACT_ADDRESS && amountInStr >= THRESHOLDS.WITHDRAW_RUC) {
     const message = `
-———✅提现RUC✅———
+———⚠️⚠️⚠️提现RUC⚠️⚠️⚠️———
 [${now()}]
 ✅Token: RUC
 ✅提现地址: ${user}
@@ -77,7 +77,7 @@ RG_RUC_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amoun
 
   if (amount0InFmt >= THRESHOLDS.SWAP_RUC_SELL){
     const message = `
-———✅卖出RUC—SWAP2✅———
+———⚠️⚠️⚠️卖出RUC—SWAP2⚠️⚠️⚠️———
 [${now()}]
 ✅Token: RUC
 ✅卖出地址: ${sender}
@@ -114,7 +114,7 @@ RG_USDT_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amou
 
   if (amount0OutFmt >= THRESHOLDS.SWAP_RG_SELL_USDT){
     const message = `
-———✅卖出RG—SWAP1✅———
+———⚠️⚠️⚠️卖出RG—SWAP1⚠️⚠️⚠️———
 [${now()}]
 ✅Token: RG
 ✅卖出地址: ${sender}
@@ -127,4 +127,9 @@ RG_USDT_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amou
   }
 });
 
-console.log('监听中...');
+
+const start = async () =>{
+  await sendTelegramMessage(escapeMarkdownV2("🚀🚀🚀链上大额事件监控已启动..."));
+}
+
+start().then()
