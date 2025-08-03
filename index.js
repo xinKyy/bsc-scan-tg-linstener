@@ -21,11 +21,12 @@ const RGGame = new ethers.Contract(RG_GAME_CONTRACT_ADDRESS, RGGame_ABI, provide
 const RG_RUC_PANCAKE = new ethers.Contract(RG_RUC_PANCAKE_SWAP, PancakeSwap_ABI, provider);
 const RG_USDT_PANCAKE = new ethers.Contract(RG_USDT_PANCAKE_SWAP, PancakeSwap_ABI, provider);
 
-const token0 = RUC_CONTRACT_ADDRESS;
-const token1 = RG_CONTRACT_ADDRESS;
+const getHashURL = (hash) =>{
+  return `https://bscscan.com/tx/${hash}`
+}
 
 function formatAmount(value, decimals = 18) {
-  return parseFloat(ethers.utils.formatUnits(value, decimals));
+  return parseFloat(ethers.utils.formatUnits(value, decimals)).toFixed(2);
 }
 
 function now() {
@@ -38,12 +39,13 @@ RGGame.on("PairedTokenMinted", async (user, token, amountIn, pairedTokenAddress,
   const amountOutStr = formatAmount(amountOut);
   if (token === RG_CONTRACT_ADDRESS && amountInStr > 10000) {
     const message = `
-———铸造RUC—— [${now()}]
+———铸造RUC———
+[${now()}]
 Token: RUC
 铸造地址: ${user}
 铸造消耗RG：${amountInStr} RG
 获得RUC: ${amountOutStr} RUC
-交易哈希：${txHash} `
+交易哈希：${getHashURL(txHash)} `
     await sendTelegramMessage(escapeMarkdownV2(message));
   }
 })
@@ -53,11 +55,12 @@ RGGame.on("WithdrawRequest", async (user, token, amount, timestamp, event) => {
   const amountInStr = formatAmount(amount);
   if (token === RUC_CONTRACT_ADDRESS && amountInStr >= 100000000) {
     const message = `
-———提现RUC—— [${now()}]
+———提现RUC———
+[${now()}]
 Token: RUC
 提现地址: ${user}
 提现数量：${amountInStr} USDT
-交易哈希：${txHash}`
+交易哈希：${getHashURL(txHash)} `
     await sendTelegramMessage(escapeMarkdownV2(message));
   }
 })
@@ -77,14 +80,15 @@ RG_RUC_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amoun
 
   if (amount0InFmt >= 100000000){
     const message = `
-———卖出RUC—SWAP2—— [${now()}]
+———卖出RUC—SWAP2———
+[${now()}]
 Token: RUC
 卖出地址: ${sender}
 卖出：${amount0InFmt} RUC
 获得: ${amount1OutFmt} RG
 当前价格: ${(amount0InFmt / amount1OutFmt).toFixed(4)} RG
 日内涨幅: --
-交易哈希：${txHash}`
+交易哈希：${getHashURL(txHash)} `
     await sendTelegramMessage(escapeMarkdownV2(message.trim()));
   }
 });
@@ -104,29 +108,29 @@ RG_USDT_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amou
 
   if (amount0InFmt >= 5000){
     const message = `
-———买入RG—SWAP1—— [${now()}]\n
-Token: RG\n
-购买地址: ${sender}\n
-买入：${amount0InFmt} USDT\n
-购得: ${amount1OutFmt} RG\n
-当前价格: ${(amount0InFmt / amount1OutFmt).toFixed(4)} USDT\n
-日内涨幅: --\n
-交易哈希：${txHash}
-    `
+———买入RG—SWAP1———
+[${now()}]
+Token: RG
+购买地址: ${sender}
+买入：${amount0InFmt} USDT
+购得: ${amount1OutFmt} RG
+当前价格: ${(amount0InFmt / amount1OutFmt).toFixed(4)} USDT
+日内涨幅: --
+交易哈希：${getHashURL(txHash)}`
     await sendTelegramMessage(escapeMarkdownV2(message.trim()));
   }
 
   if (amount0OutFmt >= 10000){
     const message = `
-———卖出RG—SWAP1—— [${now()}]\n
-Token: RG\n
-卖出地址: ${sender}\n
-卖出：${amount1InFmt} RG\n
-获得: ${amount0OutFmt} USDT\n
-当前价格: ${(amount0OutFmt / amount1InFmt).toFixed(4)} USDT\n
-日内涨幅: --\n
-交易哈希：${txHash}
-    `
+———卖出RG—SWAP1———
+[${now()}]
+Token: RG
+卖出地址: ${sender}
+卖出：${amount1InFmt} RG
+获得: ${amount0OutFmt} USDT
+当前价格: ${(amount0OutFmt / amount1InFmt).toFixed(4)} USDT
+日内涨幅: --
+交易哈希：${getHashURL(txHash)}`
     await sendTelegramMessage(escapeMarkdownV2(message.trim()));
   }
 });
