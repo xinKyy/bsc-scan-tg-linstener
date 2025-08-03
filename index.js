@@ -81,7 +81,6 @@ RG_RUC_PANCAKE.on('Swap', async (sender, amount0In, amount1In, amount0Out, amoun
 ✅卖出地址: ${sender}
 ✅卖出：${amount0InFmt} RUC
 ✅获得: ${amount1OutFmt} RG
-✅当前价格: ${(amount0InFmt / amount1OutFmt).toFixed(4)} RG
 ✅日内涨幅: --
 ✅交易哈希：${getHashURL(txHash)} `
     await sendTelegramMessage(escapeMarkdownV2(message.trim()));
