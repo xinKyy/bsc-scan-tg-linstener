@@ -6,5 +6,18 @@ module.exports = {
   RG_RUC_PANCAKE_SWAP: "0x8314217C52ee4ed4fd20A0d12C73f39FaA037104",
   RG_USDT_PANCAKE_SWAP: "0x4f4B429D9cC7F0333e7FC7b441B21eE6183ce2a7",
   TG_BOT_TOKEN: '8227000110:AAGExiLKYps8CQzC2F2iYTZxwnaY0pVC7d8',
-  TG_CHAT_ID: '-1002817934861'
+  TG_CHAT_ID: '-1002817934861',
+  // === 事件监控门槛 ===
+  THRESHOLDS: {
+    MINT_RG: 10000,         // 铸造RG消耗阈值
+    WITHDRAW_RUC: 100000000, // 提现RUC数量阈值
+    SWAP_RUC_SELL: 100000000, // Swap2 卖出RUC数量阈值
+    SWAP_RG_BUY_USDT: 5000,    // Swap1 使用USDT买入RG数量阈值
+    SWAP_RG_SELL_USDT: 10000,   // Swap1 卖出RG获得USDT数量阈值
+    // MINT_RG: 1,         // 铸造RG消耗阈值
+    // WITHDRAW_RUC: 1, // 提现RUC数量阈值
+    // SWAP_RUC_SELL: 1, // Swap2 卖出RUC数量阈值
+    // SWAP_RG_BUY_USDT: 1,    // Swap1 使用USDT买入RG数量阈值
+    // SWAP_RG_SELL_USDT: 1   // Swap1 卖出RG获得USDT数量阈值
+  }
 };
