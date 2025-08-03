@@ -29,7 +29,9 @@ function formatAmount(value, decimals = 18) {
 }
 
 function now() {
-  return new Date().toISOString().replace('T', ' ').slice(0, 19);
+  const date = new Date();
+  const beijingTime = new Date(date.getTime() + 8 * 60 * 60 * 1000); // UTC时间+8小时
+  return beijingTime.toISOString().replace('T', ' ').slice(0, 19);
 }
 
 // 监听铸造事件
