@@ -62,7 +62,7 @@ RGGame.on("WithdrawRequest", async (user, token, amount, timestamp, event) => {
 [${now()}]
 ✅Token: RUC
 ✅提现地址: ${user}
-✅提现数量：${amountInStr} USDT
+✅提现数量：${amountInStr} RUC
 ✅交易哈希：${getHashURL(txHash)} `
     await sendTelegramMessage(escapeMarkdownV2(message));
   }
